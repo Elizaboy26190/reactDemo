@@ -2,6 +2,11 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
+
+// Default url to query
+const appUrl= 'https://api-yelbdjwpjh.now.sh/';
+const getPosts = `${appUrl}posts`;
+
 // ------------------------------------------------------------------------------------------------
 //  Root component (renders the router and the common page layout elements)
 // ------------------------------------------------------------------------------------------------
