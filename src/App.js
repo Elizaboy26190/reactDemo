@@ -1,11 +1,8 @@
 import React from 'react';
 import './App.css';
+import PostList from './components/postList';
+
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-
-
-// Default url to query
-const appUrl= 'https://api-yelbdjwpjh.now.sh/';
-const getPosts = `${appUrl}posts`;
 
 // ------------------------------------------------------------------------------------------------
 //  Root component (renders the router and the common page layout elements)
@@ -23,6 +20,7 @@ const App = () => (
       </div>
       <Route exact path="/" component={HomePage} />
       <Route path="/posts/:id" component={PostPage} />
+
     </div>
   </Router>
 );
@@ -75,7 +73,9 @@ const HomePage = () => (
         <span className="Category-name">Technology</span>
       </div>
     </div>
-
+    <div className="App">
+      <PostList/>
+    </div>
     <div className="PostList">
       {/* Post 1 */}
       <div className="Post">
