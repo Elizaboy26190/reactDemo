@@ -16,7 +16,7 @@ class Home extends Component {
         fetchNewData(this);
     }
 
-    // HTML to renderr
+    // HTML to render
     render() {
         // Local variables for us to use
         const {posts} = this.state
