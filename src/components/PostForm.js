@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import axios from 'axios'
-import {appUrl, fetchNewData} from "./getData";
+import {appUrl, fetchNewData} from "./DataFunctions";
 
 // Component to render the form to create new posts.
-class AddPost extends Component {
+class PostForm extends Component {
 
     // Set up the constructor in order to bind the necessary events and update the page if needed.
     constructor(props) {
@@ -82,5 +82,5 @@ class AddPost extends Component {
     }
 }
 
-export default AddPost
+export default PostForm
 

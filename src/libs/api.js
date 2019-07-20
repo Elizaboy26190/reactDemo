@@ -1,6 +1,5 @@
 import 'isomorphic-fetch';
 
-// const siteName = 'reactwordpresstest.wordpress.com';
 const baseUrl = `https://api-yelbdjwpjh.now.sh`;
 
 const api = {

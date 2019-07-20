@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from "react-router-dom";
-import {fetchNewData} from "./getData";
+import {fetchNewData} from "./DataFunctions";
 
 class Post extends Component {
     // Local state variable for reference

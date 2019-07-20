@@ -13,7 +13,7 @@ export function fetchNewData(currentState) {
     if (localStorage.getItem('reloadRequired') === 'true' || !localStorage.getItem('posts')) {
 
         // Need to fetch the posts so download the posts with the comments embedded
-        axios.get('https://api-yelbdjwpjh.now.sh/posts/?_embed=comments')
+        axios.get(`${appUrl}/posts/?_embed=comments`)
             .then(res => {
                 // Sort the posts in reverse chronological order
                 const new_res_data = res.data.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1);

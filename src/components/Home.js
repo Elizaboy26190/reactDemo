@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import AddPost from './AddPost'
+import PostForm from './PostForm'
 import {Link} from "react-router-dom";
-import {fetchNewData} from "./getData";
+import {fetchNewData} from "./DataFunctions";
 
 class Home extends Component {
     // Local state variables required
@@ -27,7 +27,7 @@ class Home extends Component {
         if (!posts || !users.length) return <div className="center">Loading posts...</div>;
 
         // List of HTML elements for us to show
-        const postList = (
+        const postHTML = (
             // go through the list of props from our state
             posts.map(post => {
                 // The user and the picture for the user
@@ -81,14 +81,14 @@ class Home extends Component {
             <div>
                 <div className="HomePage">
                     {/* AddPost Form (for creating new posts) */}
-                    <AddPost/>
+                    <PostForm/>
                     {/*Render the HTML for the categories*/}
                     <div className="CategoryList">
                         {categoriesHTML}
                     </div>
                     {/*Render the HTML for the posts*/}
                     <div className="PostList">
-                        {postList}
+                        {postHTML}
                     </div>
                 </div>
             </div>
