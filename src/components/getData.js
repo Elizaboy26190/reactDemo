@@ -1,70 +1,65 @@
 // Default page to create access to posts from the appUrl endpoint
-
-// import React, {Components} from 'react';
-
-// Link to default URL for requests
 import axios from "axios";
 
-export const appUrl = "https://api-yelbdjwpjh.now.sh/";
+// Link to default URL for requests
+export const appUrl = "https://api-yelbdjwpjh.now.sh";
 
-// Posts API Request
-export const getPosts = `${appUrl}posts`;
-export const getUsers = `${appUrl}users`;
+// Helper function to allow us to download new data
+// It checks to see if we have the reloadRequired variable set to true or if we have not got the posts stored already.
+// We allow both the users and post to download in parallel and not rely on the other
+export function fetchNewData(currentState) {
 
-export function updateState(state) {
-    if(localStorage.getItem('reloadRequired')==='true'||!localStorage.getItem('posts')){
+    //check if reload is required
+    if (localStorage.getItem('reloadRequired') === 'true' || !localStorage.getItem('posts')) {
 
+        // Need to fetch the posts so download the posts with the comments embedded
+        axios.get('https://api-yelbdjwpjh.now.sh/posts/?_embed=comments')
+            .then(res => {
+                // Sort the posts in reverse chronological order
+                const new_res_data = res.data.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1);
+                // Update our local state to store the new data
+                currentState.setState({posts: new_res_data});
+                // Update our local storage to allow for offline use
+                localStorage.setItem('posts', JSON.stringify(new_res_data))
+            }).then(res => {
 
-    console.log("need to save posts");
-    axios.get('https://api-yelbdjwpjh.now.sh/posts/?_embed=comments')
-        .then(res => {
-            const new_res_data = res.data.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1);
-            state.setState({posts: new_res_data});
-            localStorage.setItem('posts', JSON.stringify(new_res_data))
-        }).then(a => {
-        console.log("posts = " + state.state.posts);
-        }).then(res => {
-            //now need to get categories
-        const cats = [];
-        state.state.posts.filter(a => (a.categories.length !== 0)).map(post => {
-            const a = [];
-            a.push(...post.categories);
-            console.log(cats);
-            cats.push(...post.categories);
-            return post.categories
+            // Now need to get all the categories
+            // The array to store the list of categories (including duplicates) from which we will calculate counts.
+            const all_categories = [];
+            // We need to filter and then push the spliced results into the array
+            currentState.state.posts
+                .filter(a => (a.categories.length !== 0))
+                .forEach(post => {
+                    all_categories.push(...post.categories);
+                });
+            // We can now work on this list and create an object with a key corresponding to the category and the count for each category e.g. {history:1,romance:2}
+            const reduced_data = all_categories.reduce((all_categories, category) => {
+                // if we have not seen this category before add it to our object.
+                if (!all_categories[category]) {
+                    all_categories[category] = 0;
+                }
+                // increment the count for our object
+                all_categories[category]++;
+                return all_categories;
+            }, {});
+            // Update our local state and localStorage to reflect the new data and sort so the most common categories appear first
+            currentState.setState({categories: reduced_data});
+            localStorage.setItem('categories', JSON.stringify(reduced_data))
         });
 
-        const reduced_data = cats.reduce((all_categories, category) => {
-            if (!all_categories[category]) {
-                all_categories[category] = 0;
-            }
-            all_categories[category]++;
-            return all_categories;
-        }, {});
-        console.log(reduced_data);
-        state.setState({categories: reduced_data});
-        localStorage.setItem('categories', JSON.stringify(reduced_data))
-    });
-
-    axios.get('https://api-yelbdjwpjh.now.sh/users')
-        .then(res => {
-            // console.log(res);
-            state.setState({users: res.data});
-            localStorage.setItem('users', JSON.stringify(res.data))
-        }).then(a => {
-        console.log("users = " + state.state.users);
-
-    });
-    localStorage.setItem('reloadRequired', false);
-    }
-    else if(localStorage.getItem('posts')){
-        console.log("posts exists");
-        console.log(localStorage.getItem('posts'));
-        state.setState({posts: JSON.parse(localStorage.getItem('posts'))});
-        state.setState({users: JSON.parse(localStorage.getItem('users'))});
-        state.setState({categories: JSON.parse(localStorage.getItem('categories'))});
-
-
-        console.log("posts = "+state.state.posts);
+        // We also need to update our users as for the posts
+        axios.get('https://api-yelbdjwpjh.now.sh/users')
+            .then(res => {
+                // Save the results of the data so that we can use them in localStorage and our state
+                currentState.setState({users: res.data});
+                localStorage.setItem('users', JSON.stringify(res.data))
+            });
+        // We have now done our reload so don't want to do it on subsequent reloads until needed
+        localStorage.setItem('reloadRequired', false);
+    } else {
+        // we already have it saved so don't need to reload. We should load from localStorage instead for our posts, users and categories
+        currentState.setState({posts: JSON.parse(localStorage.getItem('posts'))});
+        currentState.setState({users: JSON.parse(localStorage.getItem('users'))});
+        currentState.setState({categories: JSON.parse(localStorage.getItem('categories'))});
     }
 }

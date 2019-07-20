@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import AddPost from './AddPost'
 // import Categories from './Categories'
 import {Link} from "react-router-dom";
-import {updateState} from "./getData";
+import {fetchNewData} from "./getData";
 
 
 class Home extends Component {
@@ -11,26 +10,11 @@ class Home extends Component {
         posts:[],
         users:[],
         categories:[]
-        // user_comments:[],
     }
 
   componentDidMount(){
         console.log(localStorage.getItem('reloadRequired')==='true');
-       updateState(this);
-      //want both to run in parallel if user number is minimal
-
-      //
-      // if(!localStorage.getItem('users')){
-      //     console.log("need to save users");
-      //
-      //
-      // }
-      // else if(localStorage.getItem('users')){
-      //     console.log("users exists");
-      //     console.log(localStorage.getItem('users'));
-      //     console.log("users = "+this.state.users);
-      // }
-
+       fetchNewData(this);
   }
 
   render(){

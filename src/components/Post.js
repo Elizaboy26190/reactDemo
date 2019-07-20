@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from "react-router-dom";
-import {updateState} from "./getData";
+import {fetchNewData} from "./getData";
 
 
 class Post extends Component {
@@ -12,7 +12,7 @@ class Post extends Component {
         console.log("props = " + this.props);
         let id = this.props.match.params.id;
         this.setState({id: id});
-        updateState(this);
+        fetchNewData(this);
 
     }
 
@@ -27,7 +27,7 @@ class Post extends Component {
         }
         const full_post = posts[posts.length - id];
         if (!full_post) {
-            return <div className="center">Loading post full...</div>;
+            return <div className="center">Loading individual post...</div>;
         }
         console.log(id)
         const user = users[full_post.userId - 1];

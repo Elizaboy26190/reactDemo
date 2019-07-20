@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import axios from 'axios'
-import {Link} from "react-router-dom";
+import {appUrl, fetchNewData} from "./getData";
 
-
+// Component to render the form to create new posts.
 class AddPost extends Component {
 
+    // Set up the constructor in order to bind the necessary events and update the page if needed.
     constructor(props) {
         super(props);
         this.addPost = this.addPost.bind(this);
@@ -17,60 +18,46 @@ class AddPost extends Component {
         };
     }
 
-
+    // Function to handle setting the value for the title within our state
     handleTitleChange(e) {
-        console.log("title changed to " + e.target.value)
         this.setState({title: e.target.value})
     }
 
+    // Function to handle setting the value for the body within our state
     handleBodyChange(e) {
-        console.log("body changed to " + e.target.value)
-
         this.setState({body: e.target.value})
     }
 
+    // Function to handle the form submission.
     addPost(event) {
-    event.preventDefault();
+        // Prevent the frame from reloading before the response is done to refresh the page.
+        event.preventDefault();
 
-    console.log("adding post");
-     const { title, body} = this.state;
+        // Access our local state variables
+        const {title, body} = this.state;
 
-            return axios.post('https://api-yelbdjwpjh.now.sh/posts', {
-                title,
-                body
-            }).then(function (response) {
-                    console.log('reponse from add post is ', response);
-        }).then(res=>{
+        // Send the post request to the posts server endpoint with the body and title as the body content
+        return axios.post(`${appUrl}/posts`, {
+            title,
+            body
+        }).then(function (response) {
+            // Save the response for debugging
+            console.log('reponse from add post is ', response);
+        }).then(res => {
+            // fetch the new data
+            fetchNewData(this);
+        }).then(res => {
+            // Indicate that we need to reload the page and fetch the new data
+            localStorage.setItem('reloadRequired', true);
 
-                axios.get('https://api-yelbdjwpjh.now.sh/posts/?_embed=comments')
-                    .then(res => {
-                        const new_res_data = res.data.sort((a,b)=> a.createdAt<b.createdAt?1:-1);
-                        this.setState({posts:new_res_data});
-                        localStorage.setItem('posts',JSON.stringify(new_res_data))
-                    }).then(a=>{
-                    console.log("posts = "+this.state.posts);
-
-                });
-            }).then(res=>{
-                axios.get('https://api-yelbdjwpjh.now.sh/users')
-                    .then(res => {
-                        // console.log(res);
-                        this.setState({users: res.data});
-                        localStorage.setItem('users',JSON.stringify(res.data))
-                    }).then(a=>{
-                    console.log("users = "+this.state.users);
-
-                });
-            })
-                .then(res=>{
-                    localStorage.setItem('reloadRequired',true);
-            // need to update posts in our local storage. If we know we are the only one we could just add the post to the main posts array by pushing,. however in this case we can't as we may have other users piushing to the apis so we should update by calling posts.
-        window.location.reload()})
-
+            // Refresh the page to trigger us to download the new post list
+            window.location.reload()
+        })
     }
 
     render() {
         return (
+            // The html representing the new form where when the title input or body input is changed or if the story is submitted the neccessary methods are called
             <form className="NewPostForm">
                 <input
                     className="NewPostForm-title"
@@ -94,5 +81,6 @@ class AddPost extends Component {
         )
     }
 }
+
 export default AddPost
 
