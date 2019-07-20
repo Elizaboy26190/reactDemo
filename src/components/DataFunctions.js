@@ -16,35 +16,35 @@ export function fetchNewData(currentState) {
         axios.get(`${appUrl}/posts/?_embed=comments`)
             .then(res => {
                 // Sort the posts in reverse chronological order
-                const new_res_data = res.data.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1);
+                const newResData = res.data.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1);
                 // Update our local state to store the new data
-                currentState.setState({posts: new_res_data});
+                currentState.setState({posts: newResData});
                 // Update our local storage to allow for offline use
-                localStorage.setItem('posts', JSON.stringify(new_res_data))
+                localStorage.setItem('posts', JSON.stringify(newResData))
             }).then(res => {
 
             // Now need to get all the categories
             // The array to store the list of categories (including duplicates) from which we will calculate counts.
-            const all_categories = [];
+            const allCategories = [];
             // We need to filter and then push the spliced results into the array
             currentState.state.posts
                 .filter(a => (a.categories.length !== 0))
                 .forEach(post => {
-                    all_categories.push(...post.categories);
+                    allCategories.push(...post.categories);
                 });
             // We can now work on this list and create an object with a key corresponding to the category and the count for each category e.g. {history:1,romance:2}
-            const reduced_data = all_categories.reduce((all_categories, category) => {
+            const reducedData = allCategories.reduce((categoryJson, category) => {
                 // if we have not seen this category before add it to our object.
-                if (!all_categories[category]) {
-                    all_categories[category] = 0;
+                if (!categoryJson[category]) {
+                    categoryJson[category] = 0;
                 }
                 // increment the count for our object
-                all_categories[category]++;
-                return all_categories;
+                categoryJson[category]++;
+                return categoryJson;
             }, {});
             // Update our local state and localStorage to reflect the new data and sort so the most common categories appear first
-            currentState.setState({categories: reduced_data});
-            localStorage.setItem('categories', JSON.stringify(reduced_data))
+            currentState.setState({categories: reducedData});
+            localStorage.setItem('categories', JSON.stringify(reducedData))
         });
 
         // We also need to update our users as for the posts

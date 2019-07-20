@@ -28,21 +28,21 @@ class Post extends Component {
             return <div className="center">Loading post...</div>;
         }
         // Get the post from our storage and the id
-        const post_content = posts[posts.length - id];
+        const postContent = posts[posts.length - id];
 
         // Get the post's author object and name to help make referencing easier later
-        const user = users[post_content.userId - 1];
+        const user = users[postContent.userId - 1];
         const userName = (user) ? user.name : "";
 
         // Get the post's body and wrap each paragraph in a paragraph element
-        const body = post_content.body.split('\n').map((paragraph, i) => {
+        const body = postContent.body.split('\n').map((paragraph, i) => {
             return <p key={i}>{paragraph}</p>
         });
 
         // If we have the information for the post we can create our HTML for the post
-        const post = (post_content) ? (
+        const post = (postContent) ? (
             <div className="Post" key={`${id}`}>
-                <div className="Post-title"><Link to={`/posts/${id}`}>{post_content.title}</Link></div>
+                <div className="Post-title"><Link to={`/posts/${id}`}>{postContent.title}</Link></div>
                 <div className="Post-description">
                     {body}
                 </div>
@@ -59,12 +59,12 @@ class Post extends Component {
         ) : (<div className="center">Loading post...</div>)
 
         // All the comments for the post
-        const full_post_comments = post_content.comments;
+        const fullPostComments = postContent.comments;
 
         // Create the HTML for the comments
-        const comments = (posts && users) ? post_content.comments.map((comment, i) => {
+        const comments = (posts && users) ? postContent.comments.map((comment, i) => {
             // User for a particular comment
-            const comment_user = full_post_comments[i].userId;
+            const commentUser = fullPostComments[i].userId;
             // Mapping the body content to create the new paragraph
             const body = comment.body.split('/n').map((paragraph, i) => {
                 return <p key={i}>{paragraph}</p>
@@ -74,10 +74,10 @@ class Post extends Component {
             return (
                 <div className="Comment" key={`${comment.id}`}>
                     <div className="ProfilePhoto">
-                        <img src={`${users[comment_user - 1].photo_url}`} alt=""/>
+                        <img src={`${users[commentUser - 1].photo_url}`} alt=""/>
                     </div>
                     <div className="Comment-details">
-                        <div className="Comment-authorName">{users[comment_user - 1].name}</div>
+                        <div className="Comment-authorName">{users[commentUser - 1].name}</div>
                         <div className="Comment-text">
                             {body}
                         </div>

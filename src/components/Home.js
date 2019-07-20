@@ -32,7 +32,7 @@ class Home extends Component {
             posts.map(post => {
                 // The user and the picture for the user
                 let user = `${users[post.userId - 1].name}`;
-                let user_pic = `${users[post.userId - 1].photo_url}`;
+                let userPic = `${users[post.userId - 1].photo_url}`;
 
                 // Iterate through the body to produce a new paragraph element per newline character
                 const body = post.body.split('\n').map((paragraph, i) => {
@@ -47,7 +47,7 @@ class Home extends Component {
                         </div>
                         <div className="Post-author">
                             <div className="ProfilePhoto">
-                                <img src={user_pic} alt="."/>
+                                <img src={userPic} alt="."/>
                             </div>
                             <div className="Post-author-name">
                                 <small>posted by:</small>
