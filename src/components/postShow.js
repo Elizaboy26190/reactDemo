@@ -3,16 +3,16 @@ import React, {Component} from 'react'
 import {getPosts,getUsers} from './getData'
 import {Link} from "react-router-dom";
 import axios from 'axios';
-import Post from './Post_old';
 
-class PostList extends Component {
+
+class PostShow extends Component {
     // local state to store local posts
     state = {
         posts: [],
         users: [],
         isUpdatingPosts: true,
         isUpdatingUsers: true
-    // loading: false
+        // loading: false
     }
 
     componentDidMount() {
@@ -59,11 +59,11 @@ class PostList extends Component {
                 // console.log("data =  "+res.data.json());
                 return res.data;
             })
-                    .then(posts =>  {
-                        this.setState({  posts });
-                        this.setState({isUpdatingPosts:false});
+            .then(posts =>  {
+                this.setState({  posts });
+                this.setState({isUpdatingPosts:false});
 
-                    })
+            })
 
         axios.get(`${getUsers}`)
             .then(res => {
@@ -84,8 +84,8 @@ class PostList extends Component {
         let currentComponent = this;
         //
         //
-        console.log("posts = "+this.state.posts);
-        console.log("users = "+this.state.users);
+        // console.log("posts = "+this.state.posts);
+        // console.log("users = "+this.state.users);
 
         // this.state.users.map(a=> console.log("img = "+a.photo_url));
         let listposts = this.state.posts.map((post, index) => {
@@ -94,8 +94,12 @@ class PostList extends Component {
             //         state: { props }
             // }}
             return(
-               /* <div className="Post" key={index}>
+                <div className="Post" key={index}>
                     <div className="Post-title"><Link to={`/posts/${post.id}`}>{post.title}</Link></div>
+                    {/*<div className="Post-title"><Link to={{*/}
+                    {/*    pathname: `/blog/${props.path}`,*/}
+                    {/*    state: { props }*/}
+                    {/*}}>{post.title}</Link></div>*/}
                     <div className="Post-description"><p dangerouslySetInnerHTML={{__html: post.body}}/></div>
                     <div className="Post-author">
                         <div className="ProfilePhoto">
@@ -106,11 +110,7 @@ class PostList extends Component {
                             Mary Shelly
                         </div>
                     </div>
-                </div>*/
-                // console.log(<Post {...post} key={post.ID} />);
-
-
-            <Post {...post} key={post.ID} />
+                </div>
             )
         })
 
@@ -122,4 +122,4 @@ class PostList extends Component {
     }
 }
 
-export default PostList;
+export default PostShow;
