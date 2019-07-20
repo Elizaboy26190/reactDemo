@@ -103,3 +103,5 @@ Trade off if we save it stored and search manually for all of it / keep two arra
 automatically change users if and only if posts has changed.
 
 we chose to trigger release required currenlty only if new post is created, but could be done to automatically download every x minutes etc.
+
+would fix css styling to make categories loop when on smaller deices.
