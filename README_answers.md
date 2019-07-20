@@ -107,3 +107,4 @@ we chose to trigger release required currenlty only if new post is created, but 
 would fix css styling to make categories loop when on smaller deices.
 
             // need to update posts in our local storage. If we know we are the only one we could just add the post to the main posts array by pushing,. however in this case we can't as we may have other users piushing to the apis so we should update by calling posts.
+could use the cache storage to store images but could be large size on smaller devices
