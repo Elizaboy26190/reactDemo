@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PostForm from './PostForm'
-import {Link} from "react-router-dom";
 import {fetchNewData} from "./DataFunctions";
+import PostPreview from "./PostPreview";
 
 class Home extends Component {
     // Local state variables required
@@ -25,39 +25,6 @@ class Home extends Component {
 
         // We haven't finished returning the data yet so provide a useful message
         if (!posts || !users.length) return <div className="center">Loading posts...</div>;
-
-        // List of HTML elements for us to show
-        const postHTML = (
-            // go through the list of props from our state
-            posts.map(post => {
-                // The user and the picture for the user
-                let user = `${users[post.userId - 1].name}`;
-                let userPic = `${users[post.userId - 1].photo_url}`;
-
-                // Iterate through the body to produce a new paragraph element per newline character
-                const body = post.body.split('\n').map((paragraph, i) => {
-                    return <p key={i}>{paragraph}</p>
-                });
-                // Use the CSS to help style our html and fill in dynamically from the information for the data
-                return (
-                    <div className="Post" key={`${post.id}`}>
-                        <div className="Post-title"><Link to={`/posts/${post.id}`}>{post.title}</Link></div>
-                        <div className="Post-description">
-                            {body}
-                        </div>
-                        <div className="Post-author">
-                            <div className="ProfilePhoto">
-                                <img src={userPic} alt="."/>
-                            </div>
-                            <div className="Post-author-name">
-                                <small>posted by:</small>
-                                {user}
-                            </div>
-                        </div>
-                    </div>
-                )
-            })
-        );
 
         // Create variables for the categories and their corresponding counts
         let keys = Object.keys((categories));
@@ -88,7 +55,7 @@ class Home extends Component {
                     </div>
                     {/*Render the HTML for the posts*/}
                     <div className="PostList">
-                        {postHTML}
+                        {this.state.posts.map(post => <PostPreview post={post} user={users[post.userId - 1]} comments={false} key={post.id}/>)}
                     </div>
                 </div>
             </div>

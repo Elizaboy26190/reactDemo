@@ -17,6 +17,17 @@ export function fetchNewData(currentState) {
             .then(res => {
                 // Sort the posts in reverse chronological order
                 const newResData = res.data.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1);
+                // Sort comments too
+                newResData.map(a=> {
+
+                    a.comments = a.comments.sort(function(key1, key2){
+                        key1 = key1.id, key2 = key2.id;
+                        if(key1 < key2) return 1;
+                        if(key1 > key2) return -1;
+                        return 0;
+                    })
+                    return a;
+                })
                 // Update our local state to store the new data
                 currentState.setState({posts: newResData});
                 // Update our local storage to allow for offline use
