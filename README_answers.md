@@ -6,11 +6,26 @@ I first began by working to split the main application into two components. One 
 
 This was then broken down further to get a seperate part for the Post Form and the common data functions. This would have then been broken down further to get the category component seperate but time began to run short so it was felt that it would be better to tidy the remainder of the functioning components.
 
+# Structure
+
+I created 6 new files to help with my implementation and put all in a new components folder
+1. CommentForm.js:- The form for adding a comment to a post which queries the `https://api-yelbdjwpjh.now.sh/comments`with the body  `{body: 'comment for the post', postId: 'post in question', userId: ' 1 for default as I didn't implement user authentication})`. Had 2 helper functions, one `addComment` to post the request and one `handleBodyChange` to handle the change in body text.
+1. DataFunctions.js:- Helper functions to determine whether to load data from localStorage or from the URL.
+1. Home.js:- The homepage which shows the list of the posts and categories including filtering. It adds a `PostForm` element above, renders its own categories and then renders a  `PostPreview` element for each post in teh fioltered list(see below).
+1. Post.js:- The homepage for a particular post which uses the `PostPreview` to render the post details and adds its own comments and adds a `CommentForm` element to add a new comment.
+1. PostForm.js:- The form element for the homepage to create a new post which has 3 functions. One to post the request to  `https://api-yelbdjwpjh.now.sh/posts`, one to handlte the titleChange and one to handle the bodyChange.
+1. PostPreview.js:- This handles rendering the actual detail for the form itself.
+
+In general, the Home.js and Post.js landing pages are the only ones that calls the DataFunctions method fetchNewData to see if we need to pull new data from the url or if we can just do what we need.
+
+
 # Offline First
 
 In order to compensate for those users with low bandwith or those working offline I used local storage to store the posts and users information. I decided not to store the images directly as that could take a lot of space on smaller users potentially but caches could be used to store the data if needed for future iterations.
 
 The data is stored in a sorted form to allow for easy use.  
+
+If I would have had more time I could also have introduced a service worker which can help to reduce bandwitdh lagging.
 
 # Initial versions
 
@@ -52,8 +67,14 @@ I initially had a version that on rendering an individual post would just fetch 
 
 1. We could use the cache storage to store images but could be large memory on smaller devices
 
+# Issues
+
+1. My form submission was not setting the state correctly without reloading the window as the state was behind what was needed. I discovered this too close to the end to fix but the state syncing needs fixing so that it doesn't need to reload the page. The localstorage values are being updated correctly but the state values are not so we need to fix it so the state value relies on the localStorage values.
+
 
 # Future edits
+
+I added a new comment form for the users to add.
 
 I would add a user and category inputs to the form html and would use similar helper functions to the body and title to add the neccessary data for the project.
 

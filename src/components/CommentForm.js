@@ -18,7 +18,6 @@ class CommentForm extends Component {
 
     // Function to handle setting the value for the body within our state
     handleBodyChange(e) {
-        console.log(this.props)
         this.setState({body: e.target.value})
     }
 
@@ -45,7 +44,7 @@ class CommentForm extends Component {
         }).then(res => {
             // Indicate that we need to reload the page and fetch the new data
             localStorage.setItem('reloadRequired', true);
-
+            // this.setState(reloadRequired:true);
             // Refresh the page to trigger us to download the new post list
             window.location.reload()
         })

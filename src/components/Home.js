@@ -21,18 +21,17 @@ class Home extends Component {
     // HTML to render
     render() {
         // Local variables for us to use
-        const {posts} = this.state
+        const posts = JSON.parse(localStorage.getItem('posts'));
         const {users} = this.state
         const {categories} = this.state
         let {filteredPosts} = this.state
         console.log(posts);
         console.log(filteredPosts);
-        // filteredPosts = posts;
 
         // We haven't finished returning the data yet so provide a useful message
         if (!filteredPosts || !users.length) return <div className="center">Loading posts...</div>;
         // We need to set the initial filteredPosts once the posts are ready
-        if(!filteredPosts.length) {
+        if(!filteredPosts.length ) {
             filteredPosts=posts;
             console.log()
         }

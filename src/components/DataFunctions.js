@@ -16,9 +16,9 @@ export function fetchNewData(currentState) {
         axios.get(`${appUrl}/posts/?_embed=comments`)
             .then(res => {
                 // Sort the posts in reverse chronological order
-                const newResData = res.data.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1);
+                const sortedData = res.data.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1);
                 // Sort comments too
-                newResData.map(a=> {
+                sortedData.map(a=> {
 
                     a.comments = a.comments.sort(function(key1, key2){
                         key1 = key1.id;
@@ -30,17 +30,23 @@ export function fetchNewData(currentState) {
                     return a;
                 })
                 // Update our local state to store the new data
-                currentState.setState({posts: newResData});
-                // Update our local storage to allow for offline use
-                localStorage.setItem('posts', JSON.stringify(newResData))
-            }).then(res => {
+                console.log(currentState.state.posts);
 
+                // Update our local storage to allow for offline use
+                localStorage.setItem('posts', JSON.stringify(sortedData))
+            }).then(res => {
+            currentState.setState({posts: JSON.parse(localStorage.getItem('posts'))});
+            currentState.setState({filteredposts: JSON.parse(localStorage.getItem('posts'))});
+console.log("state =",currentState.state.posts);
             // Now need to get all the categories
             // The array to store the list of categories (including duplicates) from which we will calculate counts.
             const allCategories = [];
             // We need to filter and then push the spliced results into the array
             currentState.state.posts
-                .filter(a => (a.categories.length !== 0))
+                .filter(a => {
+                    console.log(a);
+                    return a.categories.length !== 0
+                })
                 .forEach(post => {
                     allCategories.push(...post.categories);
                 });
