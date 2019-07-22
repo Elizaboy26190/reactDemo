@@ -34,9 +34,9 @@ I initially had a version that on rendering an individual post would just fetch 
 1. Using the `categories` property on the `post` resource. Populate the categories list with an aggregate of all the categories. This list should render a unique item for each category, and a total number of posts that have that category.
     1. As we had all the posts already in task 1. I just filtered on those with at least one category and then reduced on that with an object which by the end had a category for the key and the count of that category as the value which i then put in the HTML.
 1. Can you make it so the data from api responses are locally stored so it doesn't need to be fetched every time you return to the home page or visit a detail page?
-    1. As discussde above and in the comments, I used localStorage to store the data as needed for the posts and users
+    1. As discussed above and in the comments, I used localStorage to store the data as needed for the posts and users
 1. Can you implement the category links so they filter the posts? (you can use http://localhost:4000/posts?categories_like=science-fiction` to fetch the data by a specific category)
-    1. I ran out of time to finish this part of the tasks but this could have been done by creating a function that is triggered when a category is clicked (and teh event allows us to see which category) and I can then just change the posts variable in our state to filter on that stored in localStorage (so we don't destroy any of our posts and can rely on them later if we change category).
+    1. I created a filteredPosts property within the Home component and rendered that instead of the postlist. Then I added a function which was triggered on the "onClick" event for the category name. It was then able to modify the filteredposts array. By doing this it just changed the state and preserved the original postlist. I then set it to load the posts saved in our local storage if it was not already set. This way I didn't need to send a new query. It could just as easily be modified by sending a get request to the link in the example but this would use more bandwidth which may notbe needed,. 
 
 # Trade Offs
 

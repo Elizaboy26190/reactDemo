@@ -21,7 +21,8 @@ export function fetchNewData(currentState) {
                 newResData.map(a=> {
 
                     a.comments = a.comments.sort(function(key1, key2){
-                        key1 = key1.id, key2 = key2.id;
+                        key1 = key1.id;
+                        key2 = key2.id;
                         if(key1 < key2) return 1;
                         if(key1 > key2) return -1;
                         return 0;

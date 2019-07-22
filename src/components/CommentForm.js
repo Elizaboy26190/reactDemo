@@ -27,11 +27,6 @@ class CommentForm extends Component {
         let currentState = this;
         // Prevent the frame from reloading before the response is done to refresh the page.
         event.preventDefault();
-        const post = this.props.post;
-        // const posts = this.state.posts;
-        const id = this.props.id;
-        let new_comment_id = 0;
-        let post_response_data = "";
         // Access our local state variables
         const {body} = this.state;
 
@@ -54,80 +49,6 @@ class CommentForm extends Component {
             // Refresh the page to trigger us to download the new post list
             window.location.reload()
         })
-
-        // async function updatePost() {
-        //     let response = await comment_update;
-        //
-        //     console.log("response is ",post_response_data);
-        //     let comments = post.comments;
-        //     console.log(post.comments);
-        //     comments.push({
-        //         "userId": 1,
-        //         "postId": id,
-        //         "body": body,
-        //         "id": post_response_data.id
-        //     })
-        //     console.log(comments);
-        //     axios.patch(`${appUrl}/posts/${id}`, {
-        //         "comments":comments
-        //     }).then(function (response) {
-        //             // Save the response for debugging
-        //             console.log('reponse from add comment is ', response);
-        //         }).then(res => {
-        //             // fetch the new data
-        //             fetchNewData(currentState);
-        //         }).then(res => {
-        //             // Indicate that we need to reload the page and fetch the new data
-        //             localStorage.setItem('reloadRequired', true);
-        //
-        //             // Refresh the page to trigger us to download the new post list
-        //             window.location.reload()
-        //         })
-        // }
-        // updatePost().then(res=>{console.log("successfully done both posts")}).catch(err=> console.log("failed to update posts"));
-
-
-        //     .then(function (response) {
-        //     // Save the response for debugging
-        //     console.log('reponse from add comment to post sis ', response);
-        // }).then(res => {
-        //     // fetch the new data
-        //     fetchNewData(this);
-        // }).then(res => {
-        //     // Indicate that we need to reload the page and fetch the new data
-        //     localStorage.setItem('reloadRequired', true);
-        //
-        //     // Refresh the page to trigger us to download the new post list
-        //     window.location.reload()
-        // })
-        //
-        // let comment_update2 = {
-        //     "userId": 1,
-        //     "postId": this.props.id,
-        //     "body": body,
-        //     "id": 5
-        // }
-        //
-        // // comments
-        // let post_update = axios.patch(`${appUrl}/posts/${this.props.id}`, {
-        //     body,
-        //     postId: this.props.id,
-        //     userId: 1
-        // }).then(function (response) {
-        //     // Save the response for debugging
-        //     console.log('reponse from add comment is ', response);
-        // }).then(res => {
-        //     // fetch the new data
-        //     fetchNewData(this);
-        // }).then(res => {
-        //     // Indicate that we need to reload the page and fetch the new data
-        //     localStorage.setItem('reloadRequired', true);
-        //
-        //     // Refresh the page to trigger us to download the new post list
-        //     window.location.reload()
-        // })
-
-        //also need to update posts
     }
 
     render() {
@@ -143,7 +64,7 @@ class CommentForm extends Component {
                     onChange={this.handleBodyChange}
                 />
                 <div className="NewPostForm-actions">
-                    <button className="Button" onClick={this.addComment}>Add Story</button>
+                    <button className="Button" onClick={this.addComment}>Add Comment</button>
                 </div>
             </form>
         )
