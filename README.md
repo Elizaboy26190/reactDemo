@@ -2,6 +2,8 @@
 
 This was the task for the react project I built and the solutions are available at https://github.com/Elizaboy26190/reactDemo/blob/master/README_answers.md
 
+The final version is deployed at https://blooming-journey-86589.herokuapp.com
+
 # Background
 
 A designer has created a starter react app with static markup and implemented the CSS.
