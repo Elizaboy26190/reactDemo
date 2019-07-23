@@ -66,7 +66,7 @@ class Post extends Component {
                 <PostPreview post={postContent} user={users[postContent.userId - 1]} comments={false} />
                 <div className="Comments">
                     <h2> Add Comment</h2>
-                    <CommentForm post = {postContent} id={id}/>
+                    <CommentForm post = {postContent} id={id} context={this}/>
                     <div className="CommentsList">
                         {comments}
                     </div>

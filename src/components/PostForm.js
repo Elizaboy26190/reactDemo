@@ -32,7 +32,6 @@ class PostForm extends Component {
     addPost(event) {
         // Prevent the frame from reloading before the response is done to refresh the page.
         event.preventDefault();
-
         // Access our local state variables
         const {title, body} = this.state;
 
@@ -44,14 +43,10 @@ class PostForm extends Component {
             // Save the response for debugging
             console.log('reponse from add post is ', response);
         }).then(res => {
-            // fetch the new data
-            fetchNewData(this);
-        }).then(res => {
-            // Indicate that we need to reload the page and fetch the new data
-            localStorage.setItem('reloadRequired', true);
-
-            // Refresh the page to trigger us to download the new post list
-            window.location.reload()
+            // fetch the new data by setting reloadRequired
+            localStorage.setItem('reloadRequired', 'true')
+            fetchNewData(this.props.context);
+            document.querySelector('.NewPostForm').reset();
         })
     }
 

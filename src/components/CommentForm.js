@@ -23,7 +23,6 @@ class CommentForm extends Component {
 
     // Function to handle the form submission.
     addComment(event) {
-        let currentState = this;
         // Prevent the frame from reloading before the response is done to refresh the page.
         event.preventDefault();
         // Access our local state variables
@@ -38,15 +37,11 @@ class CommentForm extends Component {
             .then(function (response) {
             // Save the response for debugging
             console.log('reponse from add comment is ', response);
-        }).then(res => {
-            // fetch the new data
-            fetchNewData(currentState);
-        }).then(res => {
-            // Indicate that we need to reload the page and fetch the new data
-            localStorage.setItem('reloadRequired', true);
-            // this.setState(reloadRequired:true);
-            // Refresh the page to trigger us to download the new post list
-            window.location.reload()
+        }).then(res => {console.log(this.props);
+            // fetch the new data by setting reloadRequired
+            localStorage.setItem('reloadRequired', 'true')
+            fetchNewData(this.props.context);
+            document.querySelector('.NewPostForm').reset();
         })
     }
 

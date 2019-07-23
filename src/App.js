@@ -15,6 +15,8 @@ const App = () => (
                         <small className="Masthead-est">est. 1691</small>
                     </Link>
                 </h1>
+                <small><a to="http://">Written by Elizabeth Phillips</a>
+                </small>
             </div>
             <Route exact path="/" component={Home}/>
             <Route path="/posts/:id" component={Post}/>

@@ -69,7 +69,7 @@ I initially had a version that on rendering an individual post would just fetch 
 
 # Issues
 
-1. My form submission was not setting the state correctly without reloading the window as the state was behind what was needed. I discovered this too close to the end to fix but the state syncing needs fixing so that it doesn't need to reload the page. The localstorage values are being updated correctly but the state values are not so we need to fix it so the state value relies on the localStorage values.
+1. My form submission was not setting the state correctly without reloading the window as the state was behind what was needed. I discovered this close to the end to fix and in the end passed the state object as the prop and it solved the issues.
 
 
 # Future edits
@@ -87,3 +87,5 @@ A similar form could also be created for comments so that we could add comments 
 I could have done better refactoring afterwards - helper functions to map and add tag when split on newline etc.
 
 This is similar to the intended behaviour of libs/api as a starter of the intended progress. 
+
+I could use paginate to make viewing in teh home page betetr and filter to just show first 10 at a time.
