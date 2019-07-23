@@ -4,4 +4,4 @@ node_modules/
 haters/
 .idea/
 package.json
-build
+build/
