@@ -2,20 +2,42 @@ import React, {Component} from 'react'
 import PostForm from './PostForm'
 import {fetchNewData} from "./DataFunctions";
 import PostPreview from "./PostPreview";
+import Pagination from "./Pagination";
 
 class Home extends Component {
     // Local state variables required
     state = {
-
+        pageOfItems: []
     }
 
-    // When the component gets mounted we fetch new data if needed or pull from localStorage if required
+    constructor() {
+        super();
+
+        // an example array of 150 items to be paged
+
+
+        // bind function in constructor instead of render (https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-bind.md)
+        this.onChangePage = this.onChangePage.bind(this);
+    }
+
+
+        // When the component gets mounted we fetch new data if needed or pull from localStorage if required
     componentDidMount() {
         const context = this;
         fetchNewData(context);
 
     }
 
+    onChangePage(pageOfItems) {
+        // update state with new page of items
+        console.log("change page to ",pageOfItems);
+        console.log(this.state.pageOfItems);
+        this.setState({ pageOfItems: pageOfItems });
+        console.log(this.state);
+
+        // console.log("change page to ",pageOfItems);
+
+    }
     // HTML to render
     render() {
         // Local variables for us to use
@@ -23,6 +45,8 @@ class Home extends Component {
         const {users} = this.state
         const {categories} = this.state
         const {filteredPosts} = this.state
+        console.log("change page to ",this.state.pageOfItems);
+
 
         // We haven't finished returning the data yet so provide a useful message
         if (!posts || !users || !filteredPosts ||!categories) return <div className="center">Loading posts...</div>;
@@ -81,10 +105,12 @@ class Home extends Component {
                     {/*Render the HTML for the posts*/}
                     <div className="PostList">
                         {/*Work off the filteredPosts instead of the main Posts*/}
-                        {filteredPosts.map(post => <PostPreview post={post} user={users[post.userId - 1]}
+                        {this.state.pageOfItems.map(post => <PostPreview post={post} user={users[post.userId - 1]}
                                                                  key={post.id}/>)}
                     </div>
+                    <Pagination items={this.state.filteredPosts} context={this} onChangePage={this.onChangePage}/>
                 </div>
+
             </div>
         )
     }
