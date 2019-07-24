@@ -10,7 +10,7 @@ const propTypes = {
 
 const defaultProps = {
     initialPage: 1,
-    pageSize: 5
+    pageSize: 2
 }
 
 class Pagination extends React.Component {
@@ -119,12 +119,20 @@ class Pagination extends React.Component {
                 {/*</li>*/}
                 {/*<li className={pager.currentPage === 1 ? 'disabled' : ''}>*/}
                     <button className={pager.currentPage === 1 ? 'disabled' : 'inactive'} onClick={() => this.setPage(pager.currentPage - 1)}>Previous</button>
+                <button key="before" className={pager.currentPage === 1 ? 'disabled' : 'inactive_disabled'} >...</button>
+
                 {/*</li>*/}
-                {pager.pages.map((page, index) =>
-                        <button key={index} className={pager.currentPage === page ? 'active' : 'inactive'} onClick={() => this.setPage(page)}>{page}</button>
-                )}
-                    <button className={pager.currentPage === pager.totalPages ? 'disabled' : 'inactive'} onClick={() => this.setPage(pager.currentPage + 1)}>Next</button>
-                    <button className={pager.currentPage === pager.totalPages ? 'disabled' : 'inactive'} onClick={() => this.setPage(pager.totalPages)}>Last</button>
+                {pager.pages.map((page, index) =>{
+
+                    return (
+
+                    <button key={index} className={pager.currentPage === page ? 'active' : (Math.abs(pager.currentPage-page)<2)?'inactive':'disabled'} onClick={() => this.setPage(page)}>{page}</button>
+                        )}
+                    )}
+                <button key="after" className={pager.currentPage === pager.totalPages ? 'disabled' : 'inactive_disabled'} >...</button>
+
+                <button className={pager.currentPage === pager.totalPages ? 'disabled' : 'inactive'} onClick={() => this.setPage(pager.currentPage + 1)}>Next</button>
+                <button className={pager.currentPage === pager.totalPages ? 'disabled' : 'inactive'} onClick={() => this.setPage(pager.totalPages)}>Last</button>
             </ul>
         );
     }
