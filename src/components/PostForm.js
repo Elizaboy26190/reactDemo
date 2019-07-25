@@ -44,7 +44,7 @@ class PostForm extends Component {
             userId: randomId
         }).then(function (response) {
             // Save the response for debugging
-            console.log('reponse from add post is ', response);
+            console.log('reponse from add post is ', JSON.stringify(response));
         }).then(res => {
             // fetch the new data by setting reloadRequired
             localStorage.setItem('reloadRequired', 'true')
