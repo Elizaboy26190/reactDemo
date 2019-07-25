@@ -32,7 +32,7 @@ class CommentForm extends Component {
         axios.post(`${appUrl}/comments`, {
             body,
             postId: Number(this.props.id),
-            userId: 1
+            userId: Number(Math.floor(Math.random()*4)+1)
         })
             .then(function (response) {
             // Save the response for debugging
