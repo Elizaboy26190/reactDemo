@@ -41,7 +41,7 @@ class PostForm extends Component {
         return axios.post(`${appUrl}/posts`, {
             title,
             body,
-            userId: randomId
+            userId: Number(randomId)
         }).then(function (response) {
             // Save the response for debugging
             console.log('reponse from add post is ', JSON.stringify(response));
