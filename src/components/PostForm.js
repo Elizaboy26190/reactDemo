@@ -34,11 +34,14 @@ class PostForm extends Component {
         event.preventDefault();
         // Access our local state variables
         const {title, body} = this.state;
+        // Random user to create the post;
+        const randomId = Math.floor(Math.random*4)+1;
 
         // Send the post request to the posts server endpoint with the body and title as the body content
         return axios.post(`${appUrl}/posts`, {
             title,
-            body
+            body,
+            userId: randomId
         }).then(function (response) {
             // Save the response for debugging
             console.log('reponse from add post is ', response);
