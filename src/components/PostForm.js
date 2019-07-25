@@ -39,9 +39,10 @@ class PostForm extends Component {
         console.log(randomId);
         // Send the post request to the posts server endpoint with the body and title as the body content
         return axios.post(`${appUrl}/posts`, {
-            userId: 2,
+            userId: 5,
             title,
-            body
+            body,
+            categories: []
         }).then(function (response) {
             // Save the response for debugging
             console.log('reponse from add post is ', JSON.stringify(response));
