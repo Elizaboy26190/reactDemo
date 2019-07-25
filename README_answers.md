@@ -6,7 +6,7 @@ I first began by working to split the main application into two components. One 
 
 This was then broken down further to get a seperate part for the Post Form and the common data functions. This would have then been broken down further to get the category component seperate but time began to run short so it was felt that it would be better to tidy the remainder of the functioning components.
 
-I then deployed the application to heroku and it can be seen at https://blooming-journey-86589.herokuapp.com/
+I then deployed the application to heroku and it can be seen at https://react-demo-liz.herokuapp.com/
 
 Updates can be seen [here](#Updates)
 
