@@ -6,6 +6,16 @@ I first began by working to split the main application into two components. One 
 
 This was then broken down further to get a seperate part for the Post Form and the common data functions. This would have then been broken down further to get the category component seperate but time began to run short so it was felt that it would be better to tidy the remainder of the functioning components.
 
+I then deployed the application to heroku and it can be seen at https://blooming-journey-86589.herokuapp.com/
+
+Updates can be seen [here](#Updates)
+
+# Updates2 
+
+### 25/07/19
+
+I implemented the idea of paginatiion using `components/pagination.js`. This allows us to only show limited posts and then allow the users to navigate to other pages if needed. This allows for a better experience in particular on small width devices to prevent the users having to do excessive scrolling.
+
 # Structure
 
 I created 6 new files to help with my implementation and put all in a new components folder
@@ -25,7 +35,7 @@ In order to compensate for those users with low bandwith or those working offlin
 
 The data is stored in a sorted form to allow for easy use.  
 
-If I would have had more time I could also have introduced a service worker which can help to reduce bandwitdh lagging.
+If I would have had more time I could also have introduced a service worker which can help to reduce bandwitdh lagging. This would help with caching images as we can intercept the request between the application the internet and load the cachedimages directly if needed. Whilst the browser itself does limited caching of these images within a session, this would be better as it would be done by streaming so we don’t have to wait for the whole image to load. Services workers can also help to control version updates by intercepting the requests and then adding notifications to encourage users to upgrade. An example of a server worker I created previously to tackle the issue of caching images and avatars as part of my udacity scholarship can be seen at https://github.com/Elizaboy26190/udacity/public/sw . If I implemented this method then the result would be a much better ofline-first app but would be memory intensive if the number of posts increased significantly. We could solve this by restricting the number of cached images etc to 50 or so as in the example above to limit this.
 
 # Initial versions
 
@@ -74,18 +84,21 @@ I initially had a version that on rendering an individual post would just fetch 
 
 # Future edits
 
-I added a new comment form for the users to add.
-
 I would add a user and category inputs to the form html and would use similar helper functions to the body and title to add the neccessary data for the project.
 
 I would also use the delete paart of the CRUD API and add buttons to delete a post (which would trigger a fetch of new data). 
 
 I would also add signup and authorising functionality to track which user posts.
 
-A similar form could also be created for comments so that we could add comments to other posts.
+A similar form could also be created for comments so that we could add comments to other posts. - Finished before submission
 
 I could have done better refactoring afterwards - helper functions to map and add tag when split on newline etc.
 
-This is similar to the intended behaviour of libs/api as a starter of the intended progress. 
+I could use paginate to make viewing in teh home page betetr and filter to just show first 10 at a time. - Finished after submission
 
-I could use paginate to make viewing in teh home page betetr and filter to just show first 10 at a time.
+
+# Updates 
+
+### 25/07/19
+
+I implemented the idea of paginatiion using `components/pagination.js`. This allows us to only show limited posts and then allow the users to navigate to other pages if needed. This allows for a better experience in particular on small width devices to prevent the users having to do excessive scrolling.
