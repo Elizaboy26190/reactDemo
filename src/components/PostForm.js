@@ -36,7 +36,7 @@ class PostForm extends Component {
         const {title, body} = this.state;
         // Random user to create the post;
         const randomId = Math.floor(Math.random*4)+1;
-
+        console.log(randomId);
         // Send the post request to the posts server endpoint with the body and title as the body content
         return axios.post(`${appUrl}/posts`, {
             title,
