@@ -37,7 +37,7 @@ class CommentForm extends Component {
             .then(function (response) {
             // Save the response for debugging
             console.log('reponse from add comment is ', response);
-        }).then(res => {console.log(this.props);
+        }).then(res => {
             // fetch the new data by setting reloadRequired
             localStorage.setItem('reloadRequired', 'true')
             fetchNewData(this.props.context);

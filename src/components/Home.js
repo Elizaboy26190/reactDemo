@@ -30,12 +30,7 @@ class Home extends Component {
 
     onChangePage(pageOfItems) {
         // update state with new page of items
-        console.log("change page to ",pageOfItems);
-        console.log(this.state.pageOfItems);
         this.setState({ pageOfItems: pageOfItems });
-        console.log(this.state);
-
-        // console.log("change page to ",pageOfItems);
 
     }
     // HTML to render
@@ -45,8 +40,6 @@ class Home extends Component {
         const {users} = this.state
         const {categories} = this.state
         const {filteredPosts} = this.state
-        console.log("change page to ",this.state.pageOfItems);
-
 
         // We haven't finished returning the data yet so provide a useful message
         if (!posts || !users || !filteredPosts ||!categories) return <div className="center">Loading posts...</div>;
@@ -61,11 +54,12 @@ class Home extends Component {
 
             // Start by using the old original list
             let filteredPosts = posts;
-
-            // If the category is anything other than all we need to filter
-            if (!(postFilter.target.innerText === "all")) {
+            const category_ind = postFilter.target.getAttribute('data-cat');
+            const category_string = Object.keys(categories)[category_ind];
+            if (!(category_ind === null)) {
                 filteredPosts = posts.filter((post) => {
-                    return (post.categories.indexOf(postFilter.target.innerText) > -1)
+
+                    return (post.categories.indexOf(category_string) > -1)
                 })
             }
 
@@ -79,9 +73,9 @@ class Home extends Component {
         const categoriesHTML = (categories) ? (
             keys.map((category, i) => {
                 return (
-                    <div className="Category" key={i} onClick={filterPosts}>
-                        <span className="Category-count">{values[i]}</span>
-                        <span className="Category-name">{category}</span>
+                    <div className="Category" key={`cat${i}`} data-cat={i} onClick={filterPosts}>
+                        <span className="Category-count" key={`count${i}`} data-cat={i}>{values[i]}</span>
+                        <span className="Category-name" key={`catName${i}`} data-cat={i}>{category}</span>
                     </div>
                 )
             })
@@ -96,9 +90,9 @@ class Home extends Component {
                     <PostForm context={this}/>
                     {/*Render the HTML for the categories*/}
                     <div className="CategoryList">
-                        <div className="Category" key={-1} onClick={filterPosts}>
-                            <span className="Category-count">{posts.length}</span>
-                            <span className="Category-name">all</span>
+                        <div className="Category" key={`cat-1`} onClick={filterPosts}>
+                            <span className="Category-count" key={`count-1`}>{posts.length}</span>
+                            <span className="Category-name"key={`catName-1`}>all</span>
                         </div>
                         {categoriesHTML}
                     </div>
