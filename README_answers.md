@@ -15,6 +15,9 @@ Updates can be seen [here](#Updates)
 ### 25/07/19
 
 I implemented the idea of paginatiion using `components/pagination.js`. This allows us to only show limited posts and then allow the users to navigate to other pages if needed. This allows for a better experience in particular on small width devices to prevent the users having to do excessive scrolling.
+### 28/07/19
+
+I fixed the issue where the categories now work on number and texts.
 
 # Structure
 
